@@ -1,9 +1,8 @@
 #include "Serial.h"
-#include "Motor.h"
 
 extern char autocl;
-extern const int INITIAL_MOTOR_SPEED;
-extern const int SPDD;
+extern unsigned char initial_motor_speed;
+extern int spdd;
 
 void Serial_Setup()
 {
@@ -32,22 +31,22 @@ void Serial_Ctrl()
 
         if (data.endsWith("U")) //前进
         {
-            Motor((double)(INITIAL_MOTOR_SPEED), (double)(INITIAL_MOTOR_SPEED + SPDD));
+            Motor((double)(initial_motor_speed), (double)(initial_motor_speed + spdd));
         }
 
         if (data.endsWith("D")) //后退
         {
-            Motor((double)(-INITIAL_MOTOR_SPEED), (double)(-INITIAL_MOTOR_SPEED - SPDD));
+            Motor((double)(-initial_motor_speed), (double)(-initial_motor_speed - spdd));
         }
 
         if (data.endsWith("R")) //左转
         {
-            Motor((double)(INITIAL_MOTOR_SPEED), (double)(-INITIAL_MOTOR_SPEED));
+            Motor((double)(initial_motor_speed), (double)(-initial_motor_speed));
         }
 
         if (data.endsWith("L")) //右转
         {
-            Motor((double)(-INITIAL_MOTOR_SPEED), (double)(INITIAL_MOTOR_SPEED));
+            Motor((double)(-initial_motor_speed), (double)(initial_motor_speed));
         }
 
         if (data.endsWith("S")) //停止

@@ -1,9 +1,9 @@
 #include "Tracker.h"
 
 static const char A[5] = {TRA5, TRA4, TRA3, TRA2, TRA1};
-static const float a = 3, b = 6, c = 11, d = 18;    //error
+static const float a = 3, b = 6, c = 11, d = 18; // error
 
-extern float p, m, tp;
+extern float p, m;
 extern float error, previous_error;
 
 void Tracker_Setup()
@@ -22,6 +22,12 @@ void Tracker_Get()
         temp |= digitalRead(A[i]) << i; //轮询5个传感器输出，并将查询结果转换为编码形式
     switch (temp)                       // 0为黑
     {
+    case 0b11011:
+        error = 0;
+        break;
+    case 0b10001:
+        error = 0;
+        break;
     case 0b01111:
         error = -d;
         break;
@@ -52,18 +58,8 @@ void Tracker_Get()
     case 0b11110:
         error = d;
         break;
-    case 0b11111:
-        tp = previous_error;
-        if (tp < 0)
-            error = -d;
-        else
-            error = d;
-        break;
     case 0b00000:
         p = 0;
-        break;
-    default:
-        error = 0;
         break;
     }
 }
