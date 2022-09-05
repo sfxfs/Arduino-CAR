@@ -1,5 +1,5 @@
-#ifndef __TRACKER_H
-#define __TRACKER_H
+#ifndef _TRACKER_H
+#define _TRACKER_H
 
 #define TRA1 15
 #define TRA2 16

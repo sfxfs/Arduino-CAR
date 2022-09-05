@@ -1,5 +1,5 @@
-#ifndef __MOTOR_H
-#define __MOTOR_H
+#ifndef _MOTOR_H
+#define _MOTOR_H
 
 #define IN1 6
 #define IN2 7

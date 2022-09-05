@@ -1,5 +1,5 @@
-#ifndef __PID_H
-#define __PID_H
+#ifndef _PID_H
+#define _PID_H
 
 #include <Arduino.h>
 #include "Tracker.h"

@@ -1,5 +1,5 @@
-#ifndef __CAR_H
-#define __CAR_H
+#ifndef _CAR_H
+#define _CAR_H
 
 #include <Arduino.h>
 #include "Motor.h"
