@@ -4,6 +4,6 @@
 #include "Car.h"
 
 void Serial_Setup(Serial_t *Stemp);
-void Serial_Ctrl(Serial_t *Stemp);
+void Serial_Ctrl(void *pvParameters);
 
 #endif

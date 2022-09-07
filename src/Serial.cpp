@@ -9,8 +9,10 @@ void Serial_Setup(Serial_t *Stemp)
     Serial.print("UART STARTED!");
 }
 
-void Serial_Ctrl(Serial_t *Stemp)
+void Serial_Ctrl(void *pvParameters)
 {
+    Serial_t *Stemp;
+    Stemp = (Serial_t *)pvParameters;
     String data = "";
     data += char(Serial.read());
     delay(2);

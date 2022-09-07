@@ -2,6 +2,7 @@
 #define _CAR_H
 
 #include <Arduino.h>
+#include <Arduino_FreeRTOS.h>
 
 #define IN1 6
 #define IN2 7

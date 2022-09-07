@@ -10,8 +10,10 @@ void Tracker_Setup(void)
     }
 }
 
-void Tracker_Get(PID_t *PID)
+void Tracker_Get(void *pvParameters)
 {
+    PID_t *PID;
+    PID = (PID_t *)pvParameters;
     unsigned char temp = 0b00000; //临时变量用于新一轮采集
     for (int i = 0; i < 5; i++)
         temp |= digitalRead(A[i]) << i; //轮询5个传感器输出，并将查询结果转换为编码形式
