@@ -1,21 +1,16 @@
 #include "Tracker.h"
 
 static const char A[5] = {TRA5, TRA4, TRA3, TRA2, TRA1};
-static const float a = 3, b = 6, c = 11, d = 18; // error
 
-extern float p, m;
-extern float error, previous_error;
-
-void Tracker_Setup()
+void Tracker_Setup(void)
 {
-    pinMode(TRA1, INPUT);
-    pinMode(TRA2, INPUT);
-    pinMode(TRA3, INPUT);
-    pinMode(TRA4, INPUT);
-    pinMode(TRA5, INPUT);
+    for (size_t i = 0; i < 5; i++)
+    {
+        pinMode(A[i], INPUT);
+    }
 }
 
-void Tracker_Get()
+void Tracker_Get(PID_t *PID)
 {
     unsigned char temp = 0b00000; //临时变量用于新一轮采集
     for (int i = 0; i < 5; i++)
@@ -23,43 +18,43 @@ void Tracker_Get()
     switch (temp)                       // 0为黑
     {
     case 0b11011:
-        error = 0;
+        PID->error = 0;
         break;
     case 0b10001:
-        error = 0;
+        PID->error = 0;
         break;
     case 0b01111:
-        error = -d;
+        PID->error = -ER_D;
         break;
     case 0b00111:
-        error = -c;
+        PID->error = -ER_C;
         break;
     case 0b00011:
-        error = -c;
+        PID->error = -ER_C;
         break;
     case 0b10111:
-        error = -b;
+        PID->error = -ER_B;
         break;
     case 0b10011:
-        error = -a, m = 10;
+        PID->error = -ER_A, PID->m = 10;
         break;
     case 0b11001:
-        error = a, m = 10;
+        PID->error = ER_A, PID->m = 10;
         break;
     case 0b11101:
-        error = b;
+        PID->error = ER_B;
         break;
     case 0b11000:
-        error = c;
+        PID->error = ER_C;
         break;
     case 0b11100:
-        error = c;
+        PID->error = ER_C;
         break;
     case 0b11110:
-        error = d;
+        PID->error = ER_D;
         break;
     case 0b00000:
-        p = 0;
+        PID->p = 0;
         break;
     }
 }

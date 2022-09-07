@@ -1,29 +1,58 @@
 #include "Car.h"
+#include "Motor.h"
+#include "PID.h"
+#include "Serial.h"
+#include "Tracker.h"
 
-float Kp, Ki = 0, Kd;                                // pid弯道参数参数
-float error = 0, P = 0, I = 0, D = 0, PID_value = 0; // pid直道参数
-float previous_error = 0, previous_I = 0;            //误差值
-unsigned char initial_motor_speed = 100;                //此处值为0-255的值，受电池电压影响，需要自己调试
-char autocl = 0;
-int spdd = 20; //两轮转速差
-double L, R;
-float p, m;
+Serial_t *Serial_car;
+PID_t *PID_car;
+float L, R;
 
 void setup()
 {
-    Serial_Setup();
-    Motor_Setup();
-    Tracker_Setup();
+  Serial_Setup(Serial_car); //初始化串口和结构体
+  PID_Init(PID_car);        //初始化结构体
+  Motor_Setup();            //初始化电机对应引脚
+  Tracker_Setup();          //初始化传感器相关引脚
 }
 
 void loop()
 {
-    Serial_Ctrl();
-    if(autocl == 1)
+  Serial_Ctrl(Serial_car);
+  if (Serial_car->autocl == 1)
+  {
+    Tracker_Get(PID_car);
+    PID_Cal(PID_car);
+    L = PID_car->p * (INITIAL_MOTOR_SPEED + PID_car->PID_value + PID_car->m);
+    R = PID_car->p * (INITIAL_MOTOR_SPEED - PID_car->PID_value + PID_car->m);
+    Motor(L, R);
+  }
+  else
+  {
+    switch (Serial_car->cmd)
     {
-        PID_Setup();
-        Tracker_Get();
-        PID_Get();
-        Motor(p * (initial_motor_speed + PID_value + m), p * (initial_motor_speed - PID_value + m) + spdd);
+    case 'u':
+      Motor(INITIAL_MOTOR_SPEED, INITIAL_MOTOR_SPEED + SPDD);
+      break;
+
+    case 'd':
+      Motor(-INITIAL_MOTOR_SPEED, -INITIAL_MOTOR_SPEED - SPDD);
+      break;
+
+    case 'r':
+      Motor(INITIAL_MOTOR_SPEED, INITIAL_MOTOR_SPEED + SPEEDUP);
+      break;
+
+    case 'l':
+      Motor(INITIAL_MOTOR_SPEED + SPEEDUP, INITIAL_MOTOR_SPEED);
+      break;
+
+    case 's':
+      Motor(0, 0);
+      break;
+
+    default:
+      break;
     }
+  }
 }

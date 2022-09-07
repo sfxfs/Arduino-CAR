@@ -1,6 +1,6 @@
 #include "Motor.h"
 
-void Motor_Setup()
+void Motor_Setup(void)
 {
     pinMode(IN1, OUTPUT);
     pinMode(IN2, OUTPUT);
@@ -10,7 +10,15 @@ void Motor_Setup()
     pinMode(ENB, OUTPUT);
 }
 
-void Motor(double L, double R)
+void Motor_Dir(bool out1, bool out2, bool out3, bool out4)
+{
+    digitalWrite(IN1, out1);
+    digitalWrite(IN2, out2);
+    digitalWrite(IN3, out3);
+    digitalWrite(IN4, out4);
+}
+
+void Motor(float L, float R)
 {
     if (abs(L) > 255)
         L = L / abs(L) * 255;
@@ -40,16 +48,8 @@ void Motor(double L, double R)
 
         Motor_Dir(0, 0, 0, 0);
 
-    Serial.print("左轮");
+    Serial.print("左轮:");
     Serial.print(L);
-    Serial.print("右轮");
+    Serial.print("右轮:");
     Serial.println(R);
-}
-
-void Motor_Dir(char out1, char out2, char out3, char out4)
-{
-    digitalWrite(IN1, out1);
-    digitalWrite(IN2, out2);
-    digitalWrite(IN3, out3);
-    digitalWrite(IN4, out4);
 }

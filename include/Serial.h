@@ -1,10 +1,9 @@
 #ifndef _SERIAL_H
 #define _SERIAL_H
 
-#include <Arduino.h>
-#include "Motor.h"
+#include "Car.h"
 
-void Serial_Setup();
-void Serial_Ctrl();
+void Serial_Setup(Serial_t *Stemp);
+void Serial_Ctrl(Serial_t *Stemp);
 
 #endif
