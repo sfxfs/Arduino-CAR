@@ -54,6 +54,7 @@ void loop()
       break;
 
     default:
+      Serial.print("输入的命令有误！");
       break;
     }
   }
