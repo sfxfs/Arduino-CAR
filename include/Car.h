@@ -26,17 +26,17 @@
 #define ER_C 11
 #define ER_D 18
 
-#define KP 5.825
-#define KI 0
-#define KD 23
+const float KP = 5.825;
+const float KI = 0;
+const float KD = 23;
 
-typedef struct
+struct Serial_t
 {
     bool autocl;
     char cmd;
-} Serial_t;
+};
 
-typedef struct
+struct PID_t
 {
     float Kp;
     float Ki;
@@ -53,6 +53,6 @@ typedef struct
 
     float p;
     float m;
-} PID_t;
+};
 
 #endif
