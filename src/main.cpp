@@ -24,10 +24,10 @@ void loop()
 {
   if (Serial_car->autocl == 1)
   {
-    PID_Cal(PID_car);
-    L = PID_car->p * (INITIAL_MOTOR_SPEED + PID_car->PID_value + PID_car->m);
+    PID_Cal(PID_car); //根据原始传感器数据计算对应PID值
+    L = PID_car->p * (INITIAL_MOTOR_SPEED + PID_car->PID_value + PID_car->m); //根据PID值计算左轮速度
     R = PID_car->p * (INITIAL_MOTOR_SPEED - PID_car->PID_value + PID_car->m);
-    Motor(L, R);
+    Motor(L, R);  //驱动电机执行相应速度
   }
   else
   {

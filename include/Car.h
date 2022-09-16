@@ -20,6 +20,7 @@
 #define TRA4 18
 #define TRA5 19
 
+//PID各值以及小车运行参数设置
 const float INITIAL_MOTOR_SPEED = 100;
 const float SPDD = 20;
 const float SPEEDUP = 50;
