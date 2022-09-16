@@ -4,6 +4,9 @@
 #include <Arduino.h>
 #include <Arduino_FreeRTOS.h>
 
+#define SERIAL_RATE 9600
+
+//传感器和电机驱动模块引脚定义
 #define IN1 6
 #define IN2 7
 #define IN3 8
@@ -17,27 +20,26 @@
 #define TRA4 18
 #define TRA5 19
 
-#define INITIAL_MOTOR_SPEED 100
-#define SPDD 20
-#define SPEEDUP 50
-#define SERIAL_RATE 9600
+const float INITIAL_MOTOR_SPEED = 100;
+const float SPDD = 20;
+const float SPEEDUP = 50;
 
-#define ER_A 3
-#define ER_B 6
-#define ER_C 11
-#define ER_D 18
+const float ER_A = 3;
+const float ER_B = 6;
+const float ER_C = 11;
+const float ER_D = 18;
 
-#define KP 5.825
-#define KI 0
-#define KD 23
+const float KP = 5.825;
+const float KI = 0;
+const float KD = 23;
 
-typedef struct
+struct Serial_t
 {
     bool autocl;
     char cmd;
-} Serial_t;
+};
 
-typedef struct
+struct PID_t
 {
     float Kp;
     float Ki;
@@ -54,6 +56,6 @@ typedef struct
 
     float p;
     float m;
-} PID_t;
+};
 
 #endif
