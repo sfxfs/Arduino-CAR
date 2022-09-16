@@ -4,8 +4,8 @@
 #include "Serial.h"
 #include "Tracker.h"
 
-Serial_t *Serial_car;
-PID_t *PID_car;
+Serial_t Serial_car;
+PID_t PID_car;
 float L, R;
 
 void setup()
@@ -19,17 +19,17 @@ void setup()
 void loop()
 {
   Serial_Ctrl(Serial_car);
-  if (Serial_car->autocl == 1)
+  if (Serial_car.autocl == 1)
   {
     Tracker_Get(PID_car);
     PID_Cal(PID_car);
-    L = PID_car->p * (INITIAL_MOTOR_SPEED + PID_car->PID_value + PID_car->m);
-    R = PID_car->p * (INITIAL_MOTOR_SPEED - PID_car->PID_value + PID_car->m);
+    L = PID_car.p * (INITIAL_MOTOR_SPEED + PID_car.PID_value + PID_car.m);
+    R = PID_car.p * (INITIAL_MOTOR_SPEED - PID_car.PID_value + PID_car.m);
     Motor(L, R);
   }
   else
   {
-    switch (Serial_car->cmd)
+    switch (Serial_car.cmd)
     {
     case 'u':
       Motor(INITIAL_MOTOR_SPEED, INITIAL_MOTOR_SPEED + SPDD);

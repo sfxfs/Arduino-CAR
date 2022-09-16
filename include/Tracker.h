@@ -4,6 +4,6 @@
 #include "Car.h"
 
 void Tracker_Setup(void);
-void Tracker_Get(PID_t *PID);
+void Tracker_Get(PID_t &PID);
 
 #endif
