@@ -33,23 +33,23 @@ void loop()
   {
     switch (Serial_car->cmd)
     {
-    case 'u':
+    case byte('u'):
       Motor(INITIAL_MOTOR_SPEED, INITIAL_MOTOR_SPEED + SPDD);
       break;
 
-    case 'd':
+    case byte('d'):
       Motor(-INITIAL_MOTOR_SPEED, -INITIAL_MOTOR_SPEED - SPDD);
       break;
 
-    case 'r':
+    case byte('r'):
       Motor(INITIAL_MOTOR_SPEED, INITIAL_MOTOR_SPEED + SPEEDUP);
       break;
 
-    case 'l':
+    case byte('l'):
       Motor(INITIAL_MOTOR_SPEED + SPEEDUP, INITIAL_MOTOR_SPEED);
       break;
 
-    case 's':
+    case byte('s'):
       Motor(0, 0);
       break;
     }
