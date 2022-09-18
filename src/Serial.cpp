@@ -5,7 +5,7 @@ void Serial_Setup(Serial_t *Stemp)
     Stemp->autocl = 0;
     Stemp->cmd = 0;
     Serial.begin(SERIAL_RATE);
-    delay(100);
+    vTaskDelay(100 / portTICK_PERIOD_MS);
     Serial.print("UART STARTED!");
 }
 
@@ -15,48 +15,50 @@ void Serial_Ctrl(void *pvParameters)
     {
         Serial_t *Stemp;
         Stemp = (Serial_t *)pvParameters;
-        String data = "";
-        data += char(Serial.read());
-        delay(2);
-        if (data.length() == 1)
+        byte data = 0;
+        data = byte(Serial.read());
+        switch (data)
         {
-            data.trim();
-            if (data.endsWith("n")) //开启自动驾驶
-            {
-                Stemp->autocl = 1;
-            }
+        case byte('n'): //开启自动驾驶
 
-            if (data.endsWith("f")) //关闭自动驾驶
-            {
-                Stemp->autocl = 0;
-                Stemp->cmd = 's';
-            }
+            Stemp->autocl = true;
+            break;
 
-            if (data.endsWith("u")) //前进
-            {
-                Stemp->cmd = 'u';
-            }
+        case byte('f'): //关闭自动驾驶
 
-            if (data.endsWith("d")) //后退
-            {
-                Stemp->cmd = 'd';
-            }
+            Stemp->autocl = false;
+            Stemp->cmd = byte('f');
+            break;
 
-            if (data.endsWith("r")) //左转
-            {
-                Stemp->cmd = 'r';
-            }
+        case byte('u'): //前进
 
-            if (data.endsWith("l")) //右转
-            {
-                Stemp->cmd = 'l';
-            }
+            Stemp->cmd = byte('u');
+            break;
 
-            if (data.endsWith("s")) //停止
-            {
-                Stemp->cmd = 's';
-            }
-            data = "";
+        case byte('d'): //后退
+
+            Stemp->cmd = byte('d');
+            break;
+
+        case byte('r'): //右转
+
+            Stemp->cmd = byte('d');
+            break;
+
+        case byte('l'): //左转
+
+            Stemp->cmd = byte('l');
+            break;
+
+        case byte('s'): //停止
+
+            Stemp->cmd = byte('s');
+            break;
+
+        default:
+            Serial.print("输入的命令有误！");
+            break;
         }
+        data = 0x00;
     }
 }

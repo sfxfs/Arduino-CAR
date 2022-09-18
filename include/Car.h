@@ -37,7 +37,7 @@ const float KD = 23;
 struct Serial_t
 {
     bool autocl;
-    char cmd;
+    byte cmd;
 };
 
 struct PID_t

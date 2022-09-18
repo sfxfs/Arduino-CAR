@@ -12,22 +12,22 @@ float L, R;
 
 void setup()
 {
-  Serial_Setup(Serial_car); //初始化串口和结构体
-  PID_Init(PID_car);        //初始化结构体
-  Motor_Setup();            //初始化电机对应引脚
-  Tracker_Setup();          //初始化传感器相关引脚
-  xTaskCreate(Serial_Ctrl, "Serial", 128, (void *)Serial_car, 1, TaskSerial_Handler); //创建读取串口的线程
-  xTaskCreate(Tracker_Get, "Tracker", 128, (void *)PID_car, 2, TaskTracker_Handler);  //创建读取传感器的线程
+  Serial_Setup(Serial_car);                                                           //初始化串口和结构体
+  PID_Init(PID_car);                                                                  //初始化结构体
+  Motor_Setup();                                                                      //初始化电机对应引脚
+  Tracker_Setup();                                                                    //初始化传感器相关引脚
+  xTaskCreate(Serial_Ctrl, "Serial", 512, (void *)Serial_car, 1, TaskSerial_Handler); //创建读取串口的线程
+  xTaskCreate(Tracker_Get, "Tracker", 512, (void *)PID_car, 2, TaskTracker_Handler);  //创建读取传感器的线程
 }
 
 void loop()
 {
-  if (Serial_car->autocl == 1)
+  if (Serial_car->autocl == true)
   {
-    PID_Cal(PID_car); //根据原始传感器数据计算对应PID值
+    PID_Cal(PID_car);                                                         //根据原始传感器数据计算对应PID值
     L = PID_car->p * (INITIAL_MOTOR_SPEED + PID_car->PID_value + PID_car->m); //根据PID值计算左轮速度
     R = PID_car->p * (INITIAL_MOTOR_SPEED - PID_car->PID_value + PID_car->m);
-    Motor(L, R);  //驱动电机执行相应速度
+    Motor(L, R); //驱动电机执行相应速度
   }
   else
   {
@@ -51,10 +51,6 @@ void loop()
 
     case 's':
       Motor(0, 0);
-      break;
-
-    default:
-      Serial.print("输入的命令有误！");
       break;
     }
   }
