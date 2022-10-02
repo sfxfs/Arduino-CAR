@@ -11,47 +11,53 @@ void Serial_Setup(Serial_t &Stemp)
 
 void Serial_Ctrl(Serial_t &Stemp)
 {
-    String data = "";
-    data += char(Serial.read());
-    delay(2);
-    if (data.length() == 1)
+    if (Serial.available() > 0)
     {
+        static String data = "";
+        data += char(Serial.read());
         data.trim();
-        if (data.endsWith("n")) //开启自动驾驶
+        if (data.length() == 4)
         {
-            Stemp.autocl = 1;
-        }
+            if (data.startsWith("car"))
+            {
+                
+                if (data.endsWith("n")) //开启自动驾驶
+                {
+                    Stemp.autocl = 1;
+                }
 
-        if (data.endsWith("f")) //关闭自动驾驶
-        {
-            Stemp.autocl = 0;
-            Stemp.cmd = 's';
-        }
+                if (data.endsWith("f")) //关闭自动驾驶
+                {
+                    Stemp.autocl = 0;
+                    Stemp.cmd = 's';
+                }
 
-        if (data.endsWith("u")) //前进
-        {
-            Stemp.cmd = 'u';
-        }
+                if (data.endsWith("u")) //前进
+                {
+                    Stemp.cmd = 'u';
+                }
 
-        if (data.endsWith("d")) //后退
-        {
-            Stemp.cmd = 'd';
-        }
+                if (data.endsWith("d")) //后退
+                {
+                    Stemp.cmd = 'd';
+                }
 
-        if (data.endsWith("r")) //左转
-        {
-            Stemp.cmd = 'r';
-        }
+                if (data.endsWith("r")) //左转
+                {
+                    Stemp.cmd = 'r';
+                }
 
-        if (data.endsWith("l")) //右转
-        {
-            Stemp.cmd = 'l';
-        }
+                if (data.endsWith("l")) //右转
+                {
+                    Stemp.cmd = 'l';
+                }
 
-        if (data.endsWith("s")) //停止
-        {
-            Stemp.cmd = 's';
+                if (data.endsWith("s")) //停止
+                {
+                    Stemp.cmd = 's';
+                }
+            }
+            data = "";
         }
-        data = "";
     }
 }
