@@ -5,7 +5,7 @@ void Serial_Setup(Serial_t &Stemp)
     Stemp.autocl = 0;
     Stemp.cmd = 0;
     Serial.begin(SERIAL_RATE);
-    delay(100);
+    while(!Serial){}
     Serial.print("UART STARTED!");
 }
 

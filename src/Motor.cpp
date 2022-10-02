@@ -20,14 +20,8 @@ void Motor_Dir(bool out1, bool out2, bool out3, bool out4)
 
 void Motor(float L, float R)
 {
-    if (abs(L) > 255)
-        L = L / abs(L) * 255;
-    if (abs(R) > 255)
-        R = R / abs(R) * 255;
-    if (abs(L) == 0)
-        L = 1;
-    if (abs(R) == 0)
-        R = 1;
+    L = constrain(L, -255, 255);
+    R = constrain(R, -255, 255);
     if (L > 0 && R > 0)
         analogWrite(ENB, L),
             analogWrite(ENA, R),
