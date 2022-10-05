@@ -5,7 +5,9 @@ void Serial_Setup(Serial_t &Stemp)
     Stemp.autocl = 0;
     Stemp.cmd = 0;
     Serial.begin(SERIAL_RATE);
-    while(!Serial){}
+    while (!Serial)
+    {
+    }
     Serial.print("UART STARTED!");
 }
 
@@ -20,41 +22,33 @@ void Serial_Ctrl(Serial_t &Stemp)
         {
             if (data.startsWith("car"))
             {
-                
-                if (data.endsWith("n")) //开启自动驾驶
+                switch (char(data.end()))
                 {
+                case 'n':
                     Stemp.autocl = 1;
-                }
-
-                if (data.endsWith("f")) //关闭自动驾驶
-                {
+                    break;
+                case 'f':
                     Stemp.autocl = 0;
                     Stemp.cmd = 's';
-                }
-
-                if (data.endsWith("u")) //前进
-                {
+                    break;
+                case 'u':
                     Stemp.cmd = 'u';
-                }
-
-                if (data.endsWith("d")) //后退
-                {
+                    break;
+                case 'd':
                     Stemp.cmd = 'd';
-                }
-
-                if (data.endsWith("r")) //左转
-                {
+                    break;
+                case 'r':
                     Stemp.cmd = 'r';
-                }
-
-                if (data.endsWith("l")) //右转
-                {
+                    break;
+                case 'l':
                     Stemp.cmd = 'l';
-                }
-
-                if (data.endsWith("s")) //停止
-                {
+                    break;
+                case 's':
                     Stemp.cmd = 's';
+                    break;
+
+                default:
+                    break;
                 }
             }
             data = "";
