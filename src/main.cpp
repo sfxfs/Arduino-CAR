@@ -6,8 +6,8 @@
 
 TaskHandle_t *TaskSerial_Handler;
 TaskHandle_t *TaskTracker_Handler;
-Serial_t *Serial_car;
-PID_t *PID_car;
+volatile Serial_t *Serial_car;
+volatile PID_t *PID_car;
 float L, R;
 
 void setup()

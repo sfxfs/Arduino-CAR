@@ -1,6 +1,6 @@
 #include "Serial.h"
 
-void Serial_Setup(Serial_t *Stemp)
+void Serial_Setup(volatile Serial_t *Stemp)
 {
     Stemp->autocl = 0;
     Stemp->cmd = 0;

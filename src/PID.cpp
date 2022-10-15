@@ -1,6 +1,6 @@
 #include "PID.h"
 
-void PID_Init(PID_t *PID)
+void PID_Init(volatile PID_t *PID)
 {
     PID->Kp = KP;
     PID->Ki = KI;
@@ -19,7 +19,7 @@ void PID_Init(PID_t *PID)
     PID->m = 0;
 }
 
-void PID_Cal(PID_t *PID)
+void PID_Cal(volatile PID_t *PID)
 {
     PID->P = PID->error;
     PID->I = PID->I + PID->error;
