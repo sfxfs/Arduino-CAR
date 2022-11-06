@@ -4,9 +4,9 @@ static const char A[5] = {TRA5, TRA4, TRA3, TRA2, TRA1};
 
 void Tracker_Setup(void)
 {
-    for (size_t i = 0; i < 5; i++)
+    for (char i : A)
     {
-        pinMode(A[i], INPUT);
+        pinMode(i, INPUT);
     }
 }
 

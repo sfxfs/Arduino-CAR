@@ -2,12 +2,8 @@
 
 void Motor_Setup(void)
 {
-    pinMode(IN1, OUTPUT);
-    pinMode(IN2, OUTPUT);
-    pinMode(IN3, OUTPUT);
-    pinMode(IN4, OUTPUT);
-    pinMode(ENA, OUTPUT);
-    pinMode(ENB, OUTPUT);
+    const char T[] = {IN1, IN2, IN3, IN4, ENA, ENB};
+    for(char i : T) pinMode(i, OUTPUT);
 }
 
 void Motor_Dir(bool out1, bool out2, bool out3, bool out4)
